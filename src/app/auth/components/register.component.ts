@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { combineLatest } from 'rxjs';
+import { AuthErrorMessageComponent } from 'src/app/shared/components/auth-error-message/auth-error-message.component';
 import { authActions } from '../store/action';
-import { selectIsSubmitting } from '../store/reducer';
+import { selectIsSubmitting, selectValidationErrors } from '../store/reducer';
 import { RegisterRequest } from '../types/registerRequest.type';
 
 @Component({
@@ -12,7 +14,13 @@ import { RegisterRequest } from '../types/registerRequest.type';
   templateUrl: './register.component.html',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive, CommonModule],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    CommonModule,
+    AuthErrorMessageComponent,
+    ReactiveFormsModule,
+  ],
 })
 export class RegisterComponent {
   form = this.fb.nonNullable.group({
@@ -20,9 +28,15 @@ export class RegisterComponent {
     email: ['', Validators.required],
     password: ['', Validators.required],
   });
-  isSubmitting$ = this.store.select(selectIsSubmitting);
+  data$ = combineLatest({
+    isSubmitting: this.store.select(selectIsSubmitting),
+    apiErrors: this.store.select(selectValidationErrors),
+  });
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    @Inject('FormBuilder') private fb: FormBuilder,
+    private store: Store
+  ) {}
 
   onSubmit() {
     const registerRequest: RegisterRequest = {

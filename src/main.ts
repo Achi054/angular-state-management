@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { importProvidersFrom, isDevMode } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
@@ -12,7 +12,7 @@ import { authFeatureKey, authReducer } from './app/auth/store/reducer';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(HttpClientModule),
+    provideHttpClient(),
     provideRouter(appRoutes),
     provideStore(),
     provideState(authFeatureKey, authReducer),
