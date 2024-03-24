@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Register } from '../store/action';
+import { authActions } from '../store/action';
 import { selectIsSubmitting } from '../store/reducer';
 import { RegisterRequest } from '../types/registerRequest.type';
 
@@ -28,6 +28,6 @@ export class RegisterComponent {
     const registerRequest: RegisterRequest = {
       user: this.form.getRawValue(),
     };
-    this.store.dispatch(Register({ request: registerRequest }));
+    this.store.dispatch(authActions.register({ request: registerRequest }));
   }
 }
