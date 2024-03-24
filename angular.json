@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Authenticator:build:production"
+              "buildTarget": "Authenticator:build:production"
             },
             "development": {
-              "browserTarget": "Authenticator:build:development"
+              "buildTarget": "Authenticator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Authenticator:build"
+            "buildTarget": "Authenticator:build"
           }
         },
         "test": {

@@ -19,5 +19,5 @@ export const registerEffect = createEffect(
       )
     );
   },
-  { dispatch: false }
+  { functional: true }
 );
