@@ -21,6 +21,7 @@ bootstrapApplication(AppComponent, {
       maxAge: 25,
       logOnly: !isDevMode(),
       autoPause: true,
+      connectInZone: true,
     }),
   ],
 }).catch((error) => console.error(error));

@@ -12,9 +12,9 @@ export const registerEffect = createEffect(
       switchMap(({ request }) =>
         authService.register(request).pipe(
           map((currentUser: CurrentUser) => {
-            return authActions.registersuccess({ currentUser });
+            return authActions.registerSuccess({ currentUser });
           }),
-          catchError(() => of(authActions.registerfailure()))
+          catchError(() => of(authActions.registerFailure()))
         )
       )
     );
